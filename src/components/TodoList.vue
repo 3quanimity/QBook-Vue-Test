@@ -14,7 +14,7 @@
       <div class="todo-item-text">
         <div
           v-if="!todo.editingText"
-          @dblclick="editText(todo)"
+          @click="editText(todo)"
           class="todo-item-display"
         >{{ todo.title }}</div>
         <input
@@ -31,7 +31,7 @@
       <div class="todo-item-text">
         <div
           v-if="!todo.editingTime"
-          @dblclick="editTime(todo)"
+          @click="editTime(todo)"
           class="todo-item-display"
         >{{ todo.requiredTime }}</div>
         <input
@@ -82,8 +82,9 @@ export default {
 
   computed: {
     remainingTime() {
-      let totalMin = 0;
-      this.todos.map(el => (totalMin += Number(el.requiredTime)));
+      let totalMin = this.todos.reduce(
+        (a, b) => Number(a.requiredTime) + Number(b.requiredTime)
+      );
 
       let hours = Math.floor(totalMin / 60);
       let minutes = totalMin % 60;
