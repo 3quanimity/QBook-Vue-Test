@@ -10,43 +10,50 @@
     <div class="total-time-container">
       <div>{{ remainingTime }}</div>
     </div>
-    <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
-      <div class="todo-item-text">
-        <div
-          v-if="!todo.editingText"
-          @click="editText(todo)"
-          class="todo-item-display"
-        >{{ todo.title }}</div>
-        <input
-          v-else
-          @blur="doneEdit(todo)"
-          @keyup.enter="doneEdit(todo)"
-          class="todo-item-edit"
-          type="text"
-          v-model="todo.title"
-          v-focus
-        />
-      </div>
 
-      <div class="todo-item-text">
-        <div
-          v-if="!todo.editingTime"
-          @click="editTime(todo)"
-          class="todo-item-display"
-        >{{ todo.requiredTime }}</div>
-        <input
-          v-else
-          @blur="doneEdit(todo)"
-          @keyup.enter="doneEdit(todo)"
-          class="todo-item-edit"
-          type="number"
-          min="0"
-          v-model="todo.requiredTime"
-          v-focus
-        />
+    <transition-group
+      name="fade"
+      enter-active-class="animate__animated animate__bounceInUp"
+      leave-active-class="animate__animated animate__bounceOutRight"
+    >
+      <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
+        <div class="todo-item-text">
+          <div
+            v-if="!todo.editingText"
+            @click="editText(todo)"
+            class="todo-item-display"
+          >{{ todo.title }}</div>
+          <input
+            v-else
+            @blur="doneEdit(todo)"
+            @keyup.enter="doneEdit(todo)"
+            class="todo-item-edit"
+            type="text"
+            v-model="todo.title"
+            v-focus
+          />
+        </div>
+
+        <div class="todo-item-text">
+          <div
+            v-if="!todo.editingTime"
+            @click="editTime(todo)"
+            class="todo-item-display"
+          >{{ todo.requiredTime }}</div>
+          <input
+            v-else
+            @blur="doneEdit(todo)"
+            @keyup.enter="doneEdit(todo)"
+            class="todo-item-edit"
+            type="number"
+            min="0"
+            v-model="todo.requiredTime"
+            v-focus
+          />
+        </div>
+        <div class="remove-item" @click="removeTodo(index)">&times;</div>
       </div>
-      <div class="remove-item" @click="removeTodo(index)">&times;</div>
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -82,9 +89,8 @@ export default {
 
   computed: {
     remainingTime() {
-      let totalMin = this.todos.reduce(
-        (a, b) => Number(a.requiredTime) + Number(b.requiredTime)
-      );
+      let totalMin = 0;
+      this.todos.map(el => (totalMin += Number(el.requiredTime)));
 
       let hours = Math.floor(totalMin / 60);
       let minutes = totalMin % 60;
@@ -160,6 +166,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css");
+
 .todo-input {
   width: 100%;
   padding: 10px 18px;
