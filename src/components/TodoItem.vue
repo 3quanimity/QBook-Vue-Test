@@ -6,8 +6,8 @@
       </div>
       <input
         v-else
-        @blur="doneEdit(id)"
-        @keyup.enter="doneEdit(id)"
+        @blur="doneEdit"
+        @keyup.enter="doneEdit"
         class="todo-item-edit"
         type="text"
         v-model="title"
@@ -21,8 +21,8 @@
       </div>
       <input
         v-else
-        @blur="doneEdit(id)"
-        @keyup.enter="doneEdit(id)"
+        @blur="doneEdit"
+        @keyup.enter="doneEdit"
         class="todo-item-edit"
         type="number"
         min="0"
@@ -30,7 +30,7 @@
         v-focus
       />
     </div>
-    <div class="remove-item" @click="removeTodo(id)">&times;</div>
+    <div class="remove-item" @click="removeTodo">&times;</div>
   </div>
 </template>
 
@@ -69,8 +69,8 @@ export default {
   },
 
   methods: {
-    removeTodo(id) {
-      const index = this.$store.state.todos.findIndex((el) => el.id == id);
+    removeTodo() {
+      const index = this.$store.state.todos.findIndex((el) => el.id == this.id);
       this.$store.state.todos.splice(index, 1);
     },
     editText() {
@@ -81,7 +81,7 @@ export default {
       this.beforeEditTimeCache = this.requiredTime;
       this.editingTime = true;
     },
-    doneEdit(id) {
+    doneEdit() {
       // prevent empty title when editing
       if (this.title.trim().length === 0) {
         alert("Click the X on the right if you want to delete the item");
@@ -101,7 +101,7 @@ export default {
       this.editingText = false;
       this.editingTime = false;
 
-      const index = this.$store.state.todos.findIndex((el) => el.id == id);
+      const index = this.$store.state.todos.findIndex((el) => el.id == this.id);
       this.$store.state.todos.splice(index, 1, {
         id: this.id,
         title: this.title,

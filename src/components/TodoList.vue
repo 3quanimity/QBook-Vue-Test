@@ -58,13 +58,13 @@ export default {
         return;
       }
 
-      this.$store.state.todos.push({
+      // commiting a mutation to the store
+      this.$store.commit("addTodo", {
         id: uuid.v4(),
         title: this.newTodo,
         requiredTime: this.newRequiredTime,
-        editingText: false,
-        editingTime: false,
       });
+
       this.newTodo = "";
       this.newRequiredTime = 0;
     },

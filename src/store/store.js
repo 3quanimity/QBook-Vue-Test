@@ -23,6 +23,18 @@ export const store = new Vuex.Store({
     ],
   },
 
+  mutations: {
+    addTodo(state, todo) {
+      state.todos.push({
+        id: todo.id,
+        title: todo.title,
+        requiredTime: todo.requiredTime,
+        editingText: false,
+        editingTime: false,
+      });
+    },
+  },
+
   getters: {
     remainingTime(state) {
       let totalMin = 0;
