@@ -8,7 +8,13 @@
       @keyup.enter="addTodo"
     />
     <div v-for="todo in todos" :key="todo.id" class="todo-item">
-      {{ todo.title }}
+      <div>{{ todo.title }}</div>
+      <div>
+        {{ todo.requiredTime }}
+      </div>
+      <div class="remove-item">
+        &times;
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +48,7 @@ export default {
   methods: {
     addTodo() {
       // prevent addition on empty input
-      if (this.newTodo.trim() == 0) {
+      if (this.newTodo.trim().length === 0) {
         return;
       }
 
@@ -68,6 +74,21 @@ export default {
 
   &:focus {
     outline: 0;
+  }
+}
+
+.todo-item {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.remove-item {
+  cursor: pointer;
+  margin-left: 14px;
+  &:hover {
+    color: red;
   }
 }
 </style>
