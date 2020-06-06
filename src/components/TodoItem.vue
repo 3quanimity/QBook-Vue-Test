@@ -54,6 +54,16 @@ export default {
       beforeEditTimeCache: 0
     };
   },
+
+  directives: {
+    // Custom directive from Vue documentation to fix focus/blur issue when editing
+    focus: {
+      inserted: function(el) {
+        el.focus();
+      }
+    }
+  },
+
   methods: {
     removeTodo(index) {
       // emitting an event to remove todo object from the todoList (parent component)

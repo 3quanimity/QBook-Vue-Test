@@ -112,14 +112,14 @@ export default {
     }
   },
 
-  directives: {
-    // Custom directive from Vue documentation to fix focus/blur issue when editing
-    focus: {
-      inserted: function(el) {
-        el.focus();
-      }
-    }
-  },
+  // directives: {
+  //   // Custom directive from Vue documentation to fix focus/blur issue when editing
+  //   focus: {
+  //     inserted: function(el) {
+  //       el.focus();
+  //     }
+  //   }
+  // },
 
   methods: {
     addTodo() {
