@@ -8,9 +8,40 @@
       @keyup.enter="addTodo"
     />
     <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
-      <div>{{ todo.title }}</div>
-      <div>
-        {{ todo.requiredTime }}
+      <div class="todo-item-text">
+        <div
+          v-if="!todo.editing"
+          @dblclick="editTodo(todo)"
+          class="todo-item-display"
+        >
+          {{ todo.title }}
+        </div>
+        <input
+          v-else
+          @blur="doneEdit(todo)"
+          @keyup.enter="doneEdit(todo)"
+          class="todo-item-edit"
+          type="text"
+          v-model="todo.title"
+        />
+      </div>
+
+      <div class="todo-item-text">
+        <div
+          v-if="!todo.editing"
+          @dblclick="editTodo(todo)"
+          class="todo-item-display"
+        >
+          {{ todo.requiredTime }}
+        </div>
+        <input
+          v-else
+          @blur="doneEdit(todo)"
+          @keyup.enter="doneEdit(todo)"
+          class="todo-item-edit"
+          type="number"
+          v-model="todo.requiredTime"
+        />
       </div>
       <div class="remove-item" @click="removeTodo(index)">
         &times;
@@ -34,12 +65,14 @@ export default {
           title: "Finish test",
           isComplete: false,
           requiredTime: 60,
+          editing: false,
         },
         {
           id: 2,
           title: "have lunch",
           isComplete: false,
           requiredTime: 15,
+          editing: false,
         },
       ],
     };
@@ -57,10 +90,20 @@ export default {
         title: this.newTodo,
         requiredTime: this.newRequiredTime,
         isComplete: false,
+        editing: false,
       });
       this.newTodo = "";
       this.newRequiredTime = 0;
     },
+
+    editTodo(todo) {
+      todo.editing = true;
+    },
+
+    doneEdit(todo) {
+      todo.editing = false;
+    },
+
     removeTodo(index) {
       this.todos.splice(index, 1);
     },
@@ -92,6 +135,30 @@ export default {
   margin-left: 14px;
   &:hover {
     color: red;
+  }
+}
+
+.todo-item-text {
+  display: flex;
+  align-items: center;
+}
+
+.todo-item-display {
+  padding: 10px;
+  border: 1px solid white;
+  margin-left: 12px;
+}
+
+.todo-item-edit {
+  font-size: 24px;
+  color: #2c3e50;
+  margin-left: 12px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+
+  &:focus {
+    outline: none;
   }
 }
 </style>
