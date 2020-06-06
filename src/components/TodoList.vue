@@ -41,6 +41,11 @@ export default {
 
   methods: {
     addTodo() {
+      // prevent addition on empty input
+      if (this.newTodo.trim() == 0) {
+        return;
+      }
+
       this.todos.push({
         id: uuid.v4(),
         title: this.newTodo,
