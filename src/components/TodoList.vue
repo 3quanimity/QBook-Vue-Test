@@ -42,24 +42,6 @@ export default {
     return {
       newTodo: "",
       newRequiredTime: 0,
-      // beforeEditCache: "",
-      // beforeEditTimeCache: 0,
-      // todos: [
-      //   {
-      //     id: 1,
-      //     title: "Finish test",
-      //     requiredTime: 60,
-      //     editingText: false,
-      //     editingTime: false,
-      //   },
-      //   {
-      //     id: 2,
-      //     title: "have lunch",
-      //     requiredTime: 15,
-      //     editingText: false,
-      //     editingTime: false,
-      //   },
-      // ],
     };
   },
 
@@ -88,12 +70,14 @@ export default {
     },
 
     finishedEdit(data) {
+      // TODO: use id instead of index
       this.$store.state.todos.splice(data.index, 1, data.todo);
     },
 
-    removeTodo(index) {
-      this.$store.state.todos.splice(index, 1);
-    },
+    // removeTodo(index) {
+    //   // TODO: use id instead of index
+    //   this.$store.state.todos.splice(index, 1);
+    // },
   },
 };
 </script>

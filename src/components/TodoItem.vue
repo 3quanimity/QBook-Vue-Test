@@ -1,7 +1,9 @@
 <template>
   <div class="todo-item">
     <div class="todo-item-text">
-      <div v-if="!editingText" @click="editText" class="todo-item-display">{{ title }}</div>
+      <div v-if="!editingText" @click="editText" class="todo-item-display">
+        {{ title }}
+      </div>
       <input
         v-else
         @blur="doneEdit"
@@ -14,7 +16,9 @@
     </div>
 
     <div class="todo-item-text">
-      <div v-if="!editingTime" @click="editTime" class="todo-item-display">{{ requiredTime }}</div>
+      <div v-if="!editingTime" @click="editTime" class="todo-item-display">
+        {{ requiredTime }}
+      </div>
       <input
         v-else
         @blur="doneEdit"
@@ -26,7 +30,7 @@
         v-focus
       />
     </div>
-    <div class="remove-item" @click="removeTodo(index)">&times;</div>
+    <div class="remove-item" @click="removeTodo(id)">&times;</div>
   </div>
 </template>
 
@@ -36,12 +40,12 @@ export default {
   props: {
     todo: {
       type: Object,
-      required: true
+      required: true,
     },
     index: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -51,7 +55,7 @@ export default {
       editingTime: this.todo.editingTime,
       requiredTime: this.todo.requiredTime,
       beforeEditCache: "",
-      beforeEditTimeCache: 0
+      beforeEditTimeCache: 0,
     };
   },
 
@@ -60,14 +64,16 @@ export default {
     focus: {
       inserted: function(el) {
         el.focus();
-      }
-    }
+      },
+    },
   },
 
   methods: {
-    removeTodo(index) {
+    removeTodo(id) {
       // emitting an event to remove todo object from the todoList (parent component)
-      this.$emit("removedTodo", index);
+      //   this.$emit("removedTodo", index);
+      const index = this.$store.state.todos.findIndex((el) => el.id == id);
+      this.$store.state.todos.splice(index, 1);
     },
     editText() {
       this.beforeEditCache = this.title;
@@ -105,13 +111,12 @@ export default {
           title: this.title,
           requiredTime: this.requiredTime,
           editingText: this.editingText,
-          editingTime: this.editingTime
-        }
+          editingTime: this.editingTime,
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
