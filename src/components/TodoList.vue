@@ -7,6 +7,7 @@
       v-model="newTodo"
       @keyup.enter="addTodo"
     />
+
     <div class="total-time-container">
       <div>{{ remainingTime }}</div>
     </div>
@@ -23,43 +24,7 @@
         :index="index"
         @removedTodo="removeTodo"
         @finishedEdit="finishedEdit"
-      >
-        <!-- <div class="todo-item-text">
-          <div
-            v-if="!todo.editingText"
-            @click="editText(todo)"
-            class="todo-item-display"
-          >{{ todo.title }}</div>
-          <input
-            v-else
-            @blur="doneEdit(todo)"
-            @keyup.enter="doneEdit(todo)"
-            class="todo-item-edit"
-            type="text"
-            v-model="todo.title"
-            v-focus
-          />
-        </div>
-
-        <div class="todo-item-text">
-          <div
-            v-if="!todo.editingTime"
-            @click="editTime(todo)"
-            class="todo-item-display"
-          >{{ todo.requiredTime }}</div>
-          <input
-            v-else
-            @blur="doneEdit(todo)"
-            @keyup.enter="doneEdit(todo)"
-            class="todo-item-edit"
-            type="number"
-            min="0"
-            v-model="todo.requiredTime"
-            v-focus
-          />
-        </div>
-        <div class="remove-item" @click="removeTodo(index)">&times;</div>-->
-      </TodoItem>
+      />
     </transition-group>
   </div>
 </template>
@@ -112,15 +77,6 @@ export default {
     }
   },
 
-  // directives: {
-  //   // Custom directive from Vue documentation to fix focus/blur issue when editing
-  //   focus: {
-  //     inserted: function(el) {
-  //       el.focus();
-  //     }
-  //   }
-  // },
-
   methods: {
     addTodo() {
       // prevent addition on empty input
@@ -139,39 +95,10 @@ export default {
       this.newRequiredTime = 0;
     },
 
-    // editText(todo) {
-    //   this.beforeEditCache = todo.title;
-    //   todo.editingText = true;
-    // },
-    // editTime(todo) {
-    //   this.beforeEditTimeCache = todo.requiredTime;
-    //   todo.editingTime = true;
-    // },
-
-    // doneEdit(todo) {
-    //   // prevent empty title when editing
-    //   if (todo.title.trim().length === 0) {
-    //     alert("Click the X on the right if you want to delete the item");
-    //     todo.title = this.beforeEditCache;
-    //   }
-
-    //   // prevent input of negative numbers or empty input when editing
-    //   if (
-    //     todo.requiredTime < 0 ||
-    //     String(todo.requiredTime).trim().length === 0
-    //   ) {
-    //     alert("Negative time or Empty input aren't allowed");
-    //     todo.requiredTime = this.beforeEditTimeCache;
-    //   }
-
-    //   todo.requiredTime = Number(todo.requiredTime);
-    //   todo.editingText = false;
-    //   todo.editingTime = false;
-    // },
-
     finishedEdit(data) {
       this.todos.splice(data.index, 1, data.todo);
     },
+
     removeTodo(index) {
       this.todos.splice(index, 1);
     }
