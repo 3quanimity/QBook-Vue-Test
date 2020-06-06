@@ -23,6 +23,7 @@
           class="todo-item-edit"
           type="text"
           v-model="todo.title"
+          v-focus
         />
       </div>
 
@@ -41,6 +42,7 @@
           class="todo-item-edit"
           type="number"
           v-model="todo.requiredTime"
+          v-focus
         />
       </div>
       <div class="remove-item" @click="removeTodo(index)">
@@ -78,6 +80,15 @@ export default {
         },
       ],
     };
+  },
+
+  directives: {
+    // Custom directive from Vue documentation to fix focus/blur issue when editing
+    focus: {
+      inserted: function(el) {
+        el.focus();
+      },
+    },
   },
 
   methods: {
