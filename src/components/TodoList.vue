@@ -10,8 +10,8 @@
     <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
       <div class="todo-item-text">
         <div
-          v-if="!todo.editing"
-          @dblclick="editTodo(todo)"
+          v-if="!todo.editingText"
+          @dblclick="editText(todo)"
           class="todo-item-display"
         >
           {{ todo.title }}
@@ -28,8 +28,8 @@
 
       <div class="todo-item-text">
         <div
-          v-if="!todo.editing"
-          @dblclick="editTodo(todo)"
+          v-if="!todo.editingTime"
+          @dblclick="editTime(todo)"
           class="todo-item-display"
         >
           {{ todo.requiredTime }}
@@ -65,14 +65,16 @@ export default {
           title: "Finish test",
           isComplete: false,
           requiredTime: 60,
-          editing: false,
+          editingText: false,
+          editingTime: false,
         },
         {
           id: 2,
           title: "have lunch",
           isComplete: false,
           requiredTime: 15,
-          editing: false,
+          editingText: false,
+          editingTime: false,
         },
       ],
     };
@@ -90,18 +92,23 @@ export default {
         title: this.newTodo,
         requiredTime: this.newRequiredTime,
         isComplete: false,
-        editing: false,
+        editingText: false,
+        editingTime: false,
       });
       this.newTodo = "";
       this.newRequiredTime = 0;
     },
 
-    editTodo(todo) {
-      todo.editing = true;
+    editText(todo) {
+      todo.editingText = true;
+    },
+    editTime(todo) {
+      todo.editingTime = true;
     },
 
     doneEdit(todo) {
-      todo.editing = false;
+      todo.editingText = false;
+      todo.editingTime = false;
     },
 
     removeTodo(index) {
