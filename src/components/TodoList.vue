@@ -18,7 +18,7 @@
       leave-active-class="animate__animated animate__bounceOutRight"
     >
       <TodoItem
-        v-for="(todo, index) in todos"
+        v-for="(todo, index) in $store.state.todos"
         :key="todo.id"
         :todo="todo"
         :index="index"
@@ -36,37 +36,39 @@ import TodoItem from "./TodoItem";
 export default {
   name: "TodoList",
   components: {
-    TodoItem
+    TodoItem,
   },
   data() {
     return {
       newTodo: "",
       newRequiredTime: 0,
-      beforeEditCache: "",
-      beforeEditTimeCache: 0,
-      todos: [
-        {
-          id: 1,
-          title: "Finish test",
-          requiredTime: 60,
-          editingText: false,
-          editingTime: false
-        },
-        {
-          id: 2,
-          title: "have lunch",
-          requiredTime: 15,
-          editingText: false,
-          editingTime: false
-        }
-      ]
+      // beforeEditCache: "",
+      // beforeEditTimeCache: 0,
+      // todos: [
+      //   {
+      //     id: 1,
+      //     title: "Finish test",
+      //     requiredTime: 60,
+      //     editingText: false,
+      //     editingTime: false,
+      //   },
+      //   {
+      //     id: 2,
+      //     title: "have lunch",
+      //     requiredTime: 15,
+      //     editingText: false,
+      //     editingTime: false,
+      //   },
+      // ],
     };
   },
 
   computed: {
     remainingTime() {
       let totalMin = 0;
-      this.todos.map(el => (totalMin += Number(el.requiredTime)));
+      this.$store.state.todos.map(
+        (el) => (totalMin += Number(el.requiredTime))
+      );
 
       let hours = Math.floor(totalMin / 60);
       let minutes = totalMin % 60;
@@ -74,7 +76,7 @@ export default {
       return hours != 0 || minutes != 0
         ? `${hours} hours and ${minutes} minutes of work remaining`
         : `No tasks left, Good Job!`;
-    }
+    },
   },
 
   methods: {
@@ -84,25 +86,25 @@ export default {
         return;
       }
 
-      this.todos.push({
+      this.$store.state.todos.push({
         id: uuid.v4(),
         title: this.newTodo,
         requiredTime: this.newRequiredTime,
         editingText: false,
-        editingTime: false
+        editingTime: false,
       });
       this.newTodo = "";
       this.newRequiredTime = 0;
     },
 
     finishedEdit(data) {
-      this.todos.splice(data.index, 1, data.todo);
+      this.$store.state.todos.splice(data.index, 1, data.todo);
     },
 
     removeTodo(index) {
-      this.todos.splice(index, 1);
-    }
-  }
+      this.$store.state.todos.splice(index, 1);
+    },
+  },
 };
 </script>
 
