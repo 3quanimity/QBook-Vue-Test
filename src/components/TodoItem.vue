@@ -58,6 +58,46 @@ export default {
     removeTodo(index) {
       // emitting an event to remove todo object from the todoList (parent component)
       this.$emit("removedTodo", index);
+    },
+    editText() {
+      this.beforeEditCache = this.title;
+      this.editingText = true;
+    },
+    editTime() {
+      this.beforeEditTimeCache = this.requiredTime;
+      this.editingTime = true;
+    },
+    doneEdit() {
+      // prevent empty title when editing
+      if (this.title.trim().length === 0) {
+        alert("Click the X on the right if you want to delete the item");
+        this.title = this.beforeEditCache;
+      }
+
+      // prevent input of negative numbers or empty input when editing
+      if (
+        this.requiredTime < 0 ||
+        String(this.requiredTime).trim().length === 0
+      ) {
+        alert("Negative time or Empty input aren't allowed");
+        this.requiredTime = this.beforeEditTimeCache;
+      }
+
+      this.requiredTime = Number(this.requiredTime);
+      this.editingText = false;
+      this.editingTime = false;
+
+      // signaling the parent to update the todos array
+      this.$emit("finishedEdit", {
+        index: this.index,
+        todo: {
+          id: this.id,
+          title: this.title,
+          requiredTime: this.requiredTime,
+          editingText: this.editingText,
+          editingTime: this.editingTime
+        }
+      });
     }
   }
 };

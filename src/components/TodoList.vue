@@ -22,6 +22,7 @@
         :todo="todo"
         :index="index"
         @removedTodo="removeTodo"
+        @finishedEdit="finishedEdit"
       >
         <!-- <div class="todo-item-text">
           <div
@@ -138,36 +139,39 @@ export default {
       this.newRequiredTime = 0;
     },
 
-    editText(todo) {
-      this.beforeEditCache = todo.title;
-      todo.editingText = true;
+    // editText(todo) {
+    //   this.beforeEditCache = todo.title;
+    //   todo.editingText = true;
+    // },
+    // editTime(todo) {
+    //   this.beforeEditTimeCache = todo.requiredTime;
+    //   todo.editingTime = true;
+    // },
+
+    // doneEdit(todo) {
+    //   // prevent empty title when editing
+    //   if (todo.title.trim().length === 0) {
+    //     alert("Click the X on the right if you want to delete the item");
+    //     todo.title = this.beforeEditCache;
+    //   }
+
+    //   // prevent input of negative numbers or empty input when editing
+    //   if (
+    //     todo.requiredTime < 0 ||
+    //     String(todo.requiredTime).trim().length === 0
+    //   ) {
+    //     alert("Negative time or Empty input aren't allowed");
+    //     todo.requiredTime = this.beforeEditTimeCache;
+    //   }
+
+    //   todo.requiredTime = Number(todo.requiredTime);
+    //   todo.editingText = false;
+    //   todo.editingTime = false;
+    // },
+
+    finishedEdit(data) {
+      this.todos.splice(data.index, 1, data.todo);
     },
-    editTime(todo) {
-      this.beforeEditTimeCache = todo.requiredTime;
-      todo.editingTime = true;
-    },
-
-    doneEdit(todo) {
-      // prevent empty title when editing
-      if (todo.title.trim().length === 0) {
-        alert("Click the X on the right if you want to delete the item");
-        todo.title = this.beforeEditCache;
-      }
-
-      // prevent input of negative numbers or empty input when editing
-      if (
-        todo.requiredTime < 0 ||
-        String(todo.requiredTime).trim().length === 0
-      ) {
-        alert("Negative time or Empty input aren't allowed");
-        todo.requiredTime = this.beforeEditTimeCache;
-      }
-
-      todo.requiredTime = Number(todo.requiredTime);
-      todo.editingText = false;
-      todo.editingTime = false;
-    },
-
     removeTodo(index) {
       this.todos.splice(index, 1);
     }
