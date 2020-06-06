@@ -16,8 +16,14 @@
       enter-active-class="animate__animated animate__bounceInUp"
       leave-active-class="animate__animated animate__bounceOutRight"
     >
-      <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
-        <div class="todo-item-text">
+      <TodoItem
+        v-for="(todo, index) in todos"
+        :key="todo.id"
+        :todo="todo"
+        :index="index"
+        @removedTodo="removeTodo"
+      >
+        <!-- <div class="todo-item-text">
           <div
             v-if="!todo.editingText"
             @click="editText(todo)"
@@ -51,17 +57,21 @@
             v-focus
           />
         </div>
-        <div class="remove-item" @click="removeTodo(index)">&times;</div>
-      </div>
+        <div class="remove-item" @click="removeTodo(index)">&times;</div>-->
+      </TodoItem>
     </transition-group>
   </div>
 </template>
 
 <script>
 import { uuid } from "vue-uuid";
+import TodoItem from "./TodoItem";
 
 export default {
   name: "TodoList",
+  components: {
+    TodoItem
+  },
   data() {
     return {
       newTodo: "",
