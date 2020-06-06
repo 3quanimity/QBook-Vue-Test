@@ -68,16 +68,6 @@ export default {
       this.newTodo = "";
       this.newRequiredTime = 0;
     },
-
-    finishedEdit(data) {
-      // TODO: use id instead of index
-      this.$store.state.todos.splice(data.index, 1, data.todo);
-    },
-
-    // removeTodo(index) {
-    //   // TODO: use id instead of index
-    //   this.$store.state.todos.splice(index, 1);
-    // },
   },
 };
 </script>

@@ -6,8 +6,8 @@
       </div>
       <input
         v-else
-        @blur="doneEdit"
-        @keyup.enter="doneEdit"
+        @blur="doneEdit(id)"
+        @keyup.enter="doneEdit(id)"
         class="todo-item-edit"
         type="text"
         v-model="title"
@@ -21,8 +21,8 @@
       </div>
       <input
         v-else
-        @blur="doneEdit"
-        @keyup.enter="doneEdit"
+        @blur="doneEdit(id)"
+        @keyup.enter="doneEdit(id)"
         class="todo-item-edit"
         type="number"
         min="0"
@@ -70,8 +70,6 @@ export default {
 
   methods: {
     removeTodo(id) {
-      // emitting an event to remove todo object from the todoList (parent component)
-      //   this.$emit("removedTodo", index);
       const index = this.$store.state.todos.findIndex((el) => el.id == id);
       this.$store.state.todos.splice(index, 1);
     },
@@ -83,7 +81,7 @@ export default {
       this.beforeEditTimeCache = this.requiredTime;
       this.editingTime = true;
     },
-    doneEdit() {
+    doneEdit(id) {
       // prevent empty title when editing
       if (this.title.trim().length === 0) {
         alert("Click the X on the right if you want to delete the item");
@@ -103,16 +101,13 @@ export default {
       this.editingText = false;
       this.editingTime = false;
 
-      // signaling the parent to update the todos array
-      this.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
-          id: this.id,
-          title: this.title,
-          requiredTime: this.requiredTime,
-          editingText: this.editingText,
-          editingTime: this.editingTime,
-        },
+      const index = this.$store.state.todos.findIndex((el) => el.id == id);
+      this.$store.state.todos.splice(index, 1, {
+        id: this.id,
+        title: this.title,
+        requiredTime: this.requiredTime,
+        editingText: this.editingText,
+        editingTime: this.editingTime,
       });
     },
   },
