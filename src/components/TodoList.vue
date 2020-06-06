@@ -7,6 +7,9 @@
       v-model="newTodo"
       @keyup.enter="addTodo"
     />
+    <div class="total-time-container">
+      <div>{{ remainingTime }} left to complete all tasks</div>
+    </div>
     <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
       <div class="todo-item-text">
         <div
@@ -41,6 +44,7 @@
           @keyup.enter="doneEdit(todo)"
           class="todo-item-edit"
           type="number"
+          min="0"
           v-model="todo.requiredTime"
           v-focus
         />
@@ -62,11 +66,11 @@ export default {
       newTodo: "",
       newRequiredTime: 0,
       beforeEditCache: "",
+      beforeEditTimeCache: 0,
       todos: [
         {
           id: 1,
           title: "Finish test",
-          isComplete: false,
           requiredTime: 60,
           editingText: false,
           editingTime: false,
@@ -74,13 +78,24 @@ export default {
         {
           id: 2,
           title: "have lunch",
-          isComplete: false,
           requiredTime: 15,
           editingText: false,
           editingTime: false,
         },
       ],
     };
+  },
+
+  computed: {
+    remainingTime() {
+      let totalMin = 0;
+      this.todos.map((el) => (totalMin += Number(el.requiredTime)));
+
+      let hours = Math.floor(totalMin / 60);
+      let minutes = totalMin % 60;
+
+      return `${hours} hours and ${minutes} minutes`;
+    },
   },
 
   directives: {
@@ -103,7 +118,6 @@ export default {
         id: uuid.v4(),
         title: this.newTodo,
         requiredTime: this.newRequiredTime,
-        isComplete: false,
         editingText: false,
         editingTime: false,
       });
@@ -116,13 +130,24 @@ export default {
       todo.editingText = true;
     },
     editTime(todo) {
+      this.beforeEditTimeCache = todo.requiredTime;
       todo.editingTime = true;
     },
 
     doneEdit(todo) {
+      // prevent empty title when editing
       if (todo.title.trim().length === 0) {
+        alert("Click the X on the right to delete the item");
         todo.title = this.beforeEditCache;
       }
+
+      // prevent input of negative numbers or empty input when editing
+      if (todo.requiredTime < 0 || todo.requiredTime.trim().length === 0) {
+        alert("Negative time or Empty input aren't allowed");
+        todo.requiredTime = this.beforeEditTimeCache;
+      }
+
+      todo.requiredTime = Number(todo.requiredTime);
       todo.editingText = false;
       todo.editingTime = false;
     },
@@ -183,5 +208,15 @@ export default {
   &:focus {
     outline: none;
   }
+}
+
+.total-time-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  border-bottom: 1px solid lightgrey;
+  padding-top: 14px;
+  margin-bottom: 14px;
 }
 </style>
