@@ -61,6 +61,7 @@ export default {
     return {
       newTodo: "",
       newRequiredTime: 0,
+      beforeEditCache: "",
       todos: [
         {
           id: 1,
@@ -111,6 +112,7 @@ export default {
     },
 
     editText(todo) {
+      this.beforeEditCache = todo.title;
       todo.editingText = true;
     },
     editTime(todo) {
@@ -118,6 +120,9 @@ export default {
     },
 
     doneEdit(todo) {
+      if (todo.title.trim().length === 0) {
+        todo.title = this.beforeEditCache;
+      }
       todo.editingText = false;
       todo.editingTime = false;
     },
