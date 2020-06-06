@@ -22,4 +22,18 @@ export const store = new Vuex.Store({
       },
     ],
   },
+
+  getters: {
+    remainingTime(state) {
+      let totalMin = 0;
+      state.todos.map((el) => (totalMin += Number(el.requiredTime)));
+
+      let hours = Math.floor(totalMin / 60);
+      let minutes = totalMin % 60;
+
+      return hours != 0 || minutes != 0
+        ? `${hours} hours and ${minutes} minutes of work remaining`
+        : `No tasks left, Good Job!`;
+    },
+  },
 });
