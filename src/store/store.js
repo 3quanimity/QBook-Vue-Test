@@ -1,7 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import VuexPersist from "vuex-persist";
 
 Vue.use(Vuex);
+
+// vuex-persist automatically saves any Vuex store changes to localStorage
+const vuexPersist = new VuexPersist({
+  key: "qbook-test",
+  storage: window.localStorage,
+});
 
 export const store = new Vuex.Store({
   state: {
@@ -15,7 +22,7 @@ export const store = new Vuex.Store({
       },
       {
         id: 2,
-        title: "have lunch",
+        title: "Have lunch",
         requiredTime: 15,
         editingText: false,
         editingTime: false,
@@ -79,4 +86,6 @@ export const store = new Vuex.Store({
         : `No tasks left, Good Job!`;
     },
   },
+
+  plugins: [vuexPersist.plugin],
 });

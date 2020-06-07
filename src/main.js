@@ -1,9 +1,9 @@
 // TODO:
-// Vue CRUD ✅
-// Multiple Vue Components ✅
-// Vuex 🔂
-// Persist data to browser cache 🔂
-// ts 🔂
+// ✅ Vue CRUD
+// ✅ Multiple Vue Components
+// ✅ Vuex
+// ✅ Persist data to local storage
+// 🔂 ts
 
 import Vue from "vue";
 import App from "./App.vue";
