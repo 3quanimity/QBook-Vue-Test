@@ -1,9 +1,7 @@
 <template>
   <div class="todo-item">
     <div class="todo-item-text">
-      <div v-if="!editingText" @click="editText" class="todo-item-display">
-        {{ title }}
-      </div>
+      <div v-if="!editingText" @click="editText" class="todo-item-display">{{ title }}</div>
       <input
         v-else
         @blur="doneEdit"
@@ -16,9 +14,7 @@
     </div>
 
     <div class="todo-item-text">
-      <div v-if="!editingTime" @click="editTime" class="todo-item-display">
-        {{ requiredTime }}
-      </div>
+      <div v-if="!editingTime" @click="editTime" class="todo-item-display">{{ requiredTime }}</div>
       <input
         v-else
         @blur="doneEdit"
@@ -34,28 +30,29 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "TodoItem",
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  name: "TodoItem" as string,
   props: {
     todo: {
       type: Object,
-      required: true,
+      required: true
     },
     index: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
-      id: this.todo.id,
-      title: this.todo.title,
-      editingText: this.todo.editingText,
-      editingTime: this.todo.editingTime,
-      requiredTime: this.todo.requiredTime,
-      beforeEditCache: "",
-      beforeEditTimeCache: 0,
+      id: this.todo.id as string,
+      title: this.todo.title as string,
+      editingText: this.todo.editingText as boolean,
+      editingTime: this.todo.editingTime as boolean,
+      requiredTime: this.todo.requiredTime as number,
+      beforeEditCache: "" as string,
+      beforeEditTimeCache: 0 as number
     };
   },
 
@@ -64,23 +61,23 @@ export default {
     focus: {
       inserted: function(el) {
         el.focus();
-      },
-    },
+      }
+    }
   },
 
   methods: {
-    removeTodo() {
+    removeTodo(): void {
       this.$store.dispatch("deleteTodo", this.id);
     },
-    editText() {
+    editText(): void {
       this.beforeEditCache = this.title;
       this.editingText = true;
     },
-    editTime() {
+    editTime(): void {
       this.beforeEditTimeCache = this.requiredTime;
       this.editingTime = true;
     },
-    doneEdit() {
+    doneEdit(): void {
       // prevent empty title when editing
       if (this.title.trim().length === 0) {
         alert("Click the X on the right if you want to delete the item");
@@ -101,15 +98,15 @@ export default {
       this.editingTime = false;
 
       this.$store.dispatch("updateTodo", {
-        id: this.id,
-        title: this.title,
-        requiredTime: this.requiredTime,
-        editingText: this.editingText,
-        editingTime: this.editingTime,
+        id: this.id as string,
+        title: this.title as string,
+        requiredTime: this.requiredTime as number,
+        editingText: this.editingText as boolean,
+        editingTime: this.editingTime as boolean
       });
-    },
-  },
-};
+    }
+  }
+});
 </script>
 
 <style></style>

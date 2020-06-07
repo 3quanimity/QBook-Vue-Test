@@ -29,30 +29,32 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { uuid } from "vue-uuid";
-import TodoItem from "./TodoItem";
+import TodoItem from "./TodoItem.vue";
+import Vue from "vue";
 
-export default {
-  name: "TodoList",
+export default Vue.extend({
+  name: "TodoList" as string,
   components: {
-    TodoItem,
+    TodoItem
   },
+
   data() {
     return {
-      newTodo: "",
-      newRequiredTime: 0,
+      newTodo: "" as string,
+      newRequiredTime: 0 as number
     };
   },
 
   computed: {
-    remainingTime() {
+    remainingTime(): string {
       return this.$store.getters.remainingTime;
-    },
+    }
   },
 
   methods: {
-    addTodo() {
+    addTodo(): void {
       // prevent addition on empty input
       if (this.newTodo.trim().length === 0) {
         return;
@@ -62,14 +64,14 @@ export default {
       this.$store.dispatch("addTodo", {
         id: uuid.v4(),
         title: this.newTodo,
-        requiredTime: this.newRequiredTime,
+        requiredTime: this.newRequiredTime
       });
 
       this.newTodo = "";
       this.newRequiredTime = 0;
-    },
-  },
-};
+    }
+  }
+});
 </script>
 
 <style lang="scss">

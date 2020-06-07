@@ -5,15 +5,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import TodoList from "./components/TodoList.vue";
 
-export default {
+export default Vue.extend({
   name: "App",
   components: {
-    TodoList,
-  },
-};
+    TodoList
+  }
+});
 </script>
 
 <style>
