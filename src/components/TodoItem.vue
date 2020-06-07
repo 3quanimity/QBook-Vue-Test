@@ -70,7 +70,7 @@ export default {
 
   methods: {
     removeTodo() {
-      this.$store.commit("deleteTodo", this.id);
+      this.$store.dispatch("deleteTodo", this.id);
     },
     editText() {
       this.beforeEditCache = this.title;
@@ -100,7 +100,7 @@ export default {
       this.editingText = false;
       this.editingTime = false;
 
-      this.$store.commit("updateTodo", {
+      this.$store.dispatch("updateTodo", {
         id: this.id,
         title: this.title,
         requiredTime: this.requiredTime,

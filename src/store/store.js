@@ -23,6 +23,7 @@ export const store = new Vuex.Store({
     ],
   },
 
+  // 👋 Note to self: use when processing is local (fast)
   mutations: {
     addTodo(state, todo) {
       state.todos.push({
@@ -46,6 +47,22 @@ export const store = new Vuex.Store({
         editingText: todo.editingText,
         editingTime: todo.editingTime,
       });
+    },
+  },
+
+  // 👋 Note to self: use when processing would take time aka communicate with a DB (asynchronus)
+  actions: {
+    addTodo(context, todo) {
+      // simulating a req for async code
+      //   setTimeout(() => {
+      context.commit("addTodo", todo);
+      //   }, 1000);
+    },
+    deleteTodo(context, id) {
+      context.commit("deleteTodo", id);
+    },
+    updateTodo(context, todo) {
+      context.commit("updateTodo", todo);
     },
   },
 

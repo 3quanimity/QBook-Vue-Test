@@ -59,7 +59,7 @@ export default {
       }
 
       // commiting a mutation to the store
-      this.$store.commit("addTodo", {
+      this.$store.dispatch("addTodo", {
         id: uuid.v4(),
         title: this.newTodo,
         requiredTime: this.newRequiredTime,
