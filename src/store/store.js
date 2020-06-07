@@ -33,6 +33,20 @@ export const store = new Vuex.Store({
         editingTime: false,
       });
     },
+    deleteTodo(state, id) {
+      const index = state.todos.findIndex((el) => el.id == id);
+      state.todos.splice(index, 1);
+    },
+    updateTodo(state, todo) {
+      const index = state.todos.findIndex((el) => el.id == todo.id);
+      state.todos.splice(index, 1, {
+        id: todo.id,
+        title: todo.title,
+        requiredTime: todo.requiredTime,
+        editingText: todo.editingText,
+        editingTime: todo.editingTime,
+      });
+    },
   },
 
   getters: {

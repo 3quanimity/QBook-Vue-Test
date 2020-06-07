@@ -70,8 +70,7 @@ export default {
 
   methods: {
     removeTodo() {
-      const index = this.$store.state.todos.findIndex((el) => el.id == this.id);
-      this.$store.state.todos.splice(index, 1);
+      this.$store.commit("deleteTodo", this.id);
     },
     editText() {
       this.beforeEditCache = this.title;
@@ -101,8 +100,7 @@ export default {
       this.editingText = false;
       this.editingTime = false;
 
-      const index = this.$store.state.todos.findIndex((el) => el.id == this.id);
-      this.$store.state.todos.splice(index, 1, {
+      this.$store.commit("updateTodo", {
         id: this.id,
         title: this.title,
         requiredTime: this.requiredTime,
