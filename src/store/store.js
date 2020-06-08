@@ -35,7 +35,7 @@ export const store = new Vuex.Store({
   // 👋 Note to self: use when processing is local (fast)
   mutations: {
     addTodo(state, todo) {
-      state.todos.push({
+      state.todos.unshift({
         id: todo.id,
         title: todo.title,
         requiredTime: todo.requiredTime,

@@ -14,7 +14,7 @@
 
     <transition-group
       name="fade"
-      enter-active-class="animate__animated animate__bounceInUp"
+      enter-active-class="animate__animated animate__bounceInLeft"
       leave-active-class="animate__animated animate__bounceOutRight"
     >
       <TodoItem
