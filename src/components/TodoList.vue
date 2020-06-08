@@ -3,7 +3,7 @@
     <input
       type="text"
       class="todo-input"
-      placeholder="What needs to be done"
+      placeholder="Enter a task to track"
       v-model="newTodo"
       @keyup.enter="addTodo"
     />
@@ -126,6 +126,15 @@ export default Vue.extend({
   &:focus {
     outline: none;
   }
+}
+
+.edit-number {
+  max-width: 90px;
+}
+
+.minutes-container {
+  display: flex;
+  align-items: center;
 }
 
 .total-time-container {

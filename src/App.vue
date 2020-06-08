@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="container">
     <img class="logo" alt="Vue logo" src="./assets/logo.png" />
+    <h3>QBook Vue Test</h3>
     <TodoList />
   </div>
 </template>

@@ -13,20 +13,23 @@
       />
     </div>
 
-    <div class="todo-item-text">
-      <div v-if="!editingTime" @click="editTime" class="todo-item-display">{{ requiredTime }}</div>
-      <input
-        v-else
-        @blur="doneEdit"
-        @keyup.enter="doneEdit"
-        class="todo-item-edit"
-        type="number"
-        min="0"
-        v-model="requiredTime"
-        v-focus
-      />
+    <div class="minutes-container">
+      <div class="todo-item-text">
+        <div v-if="!editingTime" @click="editTime" class="todo-item-display">{{ requiredTime }}</div>
+        <input
+          v-else
+          @blur="doneEdit"
+          @keyup.enter="doneEdit"
+          class="todo-item-edit edit-number"
+          type="number"
+          min="0"
+          v-model="requiredTime"
+          v-focus
+        />
+      </div>
+      <span @click="editTime">mins</span>
+      <div class="remove-item" @click="removeTodo">&times;</div>
     </div>
-    <div class="remove-item" @click="removeTodo">&times;</div>
   </div>
 </template>
 

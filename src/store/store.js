@@ -1,3 +1,4 @@
+// TODO: use a model when migrating to ts
 import Vue from "vue";
 import Vuex from "vuex";
 import VuexPersist from "vuex-persist";
@@ -13,31 +14,28 @@ const vuexPersist = new VuexPersist({
 // 📚 Vuex Store
 export const store = new Vuex.Store({
   state: {
-    todos:
-      // TODO: use a model when migrating to ts
-      [
-        {
-          id: 1,
-          title: "Finish test",
-          requiredTime: 60,
-          editingText: false,
-          editingTime: false,
-        },
-        {
-          id: 2,
-          title: "Have lunch",
-          requiredTime: 15,
-          editingText: false,
-          editingTime: false,
-        },
-      ],
+    todos: [
+      // {
+      //   id: 1,
+      //   title: "Finish test",
+      //   requiredTime: 60,
+      //   editingText: false,
+      //   editingTime: false,
+      // },
+      // {
+      //   id: 2,
+      //   title: "Have lunch",
+      //   requiredTime: 15,
+      //   editingText: false,
+      //   editingTime: false,
+      // },
+    ],
   },
 
   // 👋 Note to self: use when processing is local (fast)
   mutations: {
     addTodo(state, todo) {
       state.todos.push({
-        // TODO: use a model when migrating to ts
         id: todo.id,
         title: todo.title,
         requiredTime: todo.requiredTime,
@@ -52,7 +50,6 @@ export const store = new Vuex.Store({
     updateTodo(state, todo) {
       const index = state.todos.findIndex((el) => el.id == todo.id);
       state.todos.splice(index, 1, {
-        // TODO: use a model when migrating to ts
         id: todo.id,
         title: todo.title,
         requiredTime: todo.requiredTime,
@@ -86,9 +83,17 @@ export const store = new Vuex.Store({
       const hours = Math.floor(totalMin / 60);
       const minutes = totalMin % 60;
 
-      return hours != 0 || minutes != 0
-        ? `${hours} hours and ${minutes} minutes of work remaining`
-        : `No tasks left, Good Job!`;
+      // return hours != 0 || minutes != 0
+      //   ? `${hours} hours and ${minutes} minutes of work remaining`
+      //   : `No tasks left, Good Job!`;
+
+      if (state.todos.find((el) => el.requiredTime == 0)) {
+        return `Specify a duration for your tasks`;
+      } else if (!state.todos[0]) {
+        return `No tasks left, Good Job!`;
+      } else {
+        return `${hours} hours and ${minutes} minutes of work remaining`;
+      }
     },
   },
 
